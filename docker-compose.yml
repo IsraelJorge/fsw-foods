@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:latest
+    volumes:
+      - './.postgres-data:/var/lib/postgresql/data'
+    restart: always
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    networks:
+      - fsw-foods
+
+networks:
+  fsw-foods:
+    driver: bridge
