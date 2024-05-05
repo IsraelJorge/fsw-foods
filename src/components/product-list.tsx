@@ -1,15 +1,15 @@
-import { ProductItem } from './product-item';
-import { Prisma } from '@prisma/client';
+import { ProductItem } from './product-item'
+import { Prisma } from '@prisma/client'
 
 export type ProductListProps = {
   products: Prisma.ProductGetPayload<{
     include: {
       restaurant: {
-        select: { name: true };
-      };
-    };
-  }>[];
-};
+        select: { name: true }
+      }
+    }
+  }>[]
+}
 
 export async function ProductList({ products = [] }: ProductListProps) {
   return (
@@ -18,5 +18,5 @@ export async function ProductList({ products = [] }: ProductListProps) {
         <ProductItem key={product.id} product={product} />
       ))}
     </div>
-  );
+  )
 }

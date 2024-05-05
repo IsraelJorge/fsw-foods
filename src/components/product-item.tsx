@@ -1,21 +1,21 @@
-import { calculateProductTotalPrice, formatCurrency } from '@/helpers/price';
-import { Prisma } from '@prisma/client';
+import { calculateProductTotalPrice, formatCurrency } from '@/helpers/price'
+import { Prisma } from '@prisma/client'
 
-import Image from 'next/image';
-import { Icon } from './icon';
+import Image from 'next/image'
+import { Icon } from './icon'
 
 export type ProductItemProps = {
   product: Prisma.ProductGetPayload<{
     include: {
       restaurant: {
-        select: { name: true };
-      };
-    };
-  }>;
-};
+        select: { name: true }
+      }
+    }
+  }>
+}
 
 export function ProductItem({ product }: ProductItemProps) {
-  const hasProductDiscountPercentage = product.discountPercentage > 0;
+  const hasProductDiscountPercentage = product.discountPercentage > 0
 
   return (
     <div className="rou w-[150px] min-w-[150px] space-y-2">
@@ -54,5 +54,5 @@ export function ProductItem({ product }: ProductItemProps) {
         </span>
       </div>
     </div>
-  );
+  )
 }

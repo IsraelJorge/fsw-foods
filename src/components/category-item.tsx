@@ -1,9 +1,9 @@
-import { Category } from '@prisma/client';
-import Image from 'next/image';
+import { Category } from '@prisma/client'
+import Image from 'next/image'
 
 export type CategoryItemProps = {
-  category: Category;
-};
+  category: Category
+}
 
 export function CategoryItem({ category }: CategoryItemProps) {
   return (
@@ -16,5 +16,5 @@ export function CategoryItem({ category }: CategoryItemProps) {
       />
       <span className="text-sm font-semibold">{category.name}</span>
     </div>
-  );
+  )
 }

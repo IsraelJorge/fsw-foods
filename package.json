@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "npx eslint --fix --ext ts,tsx src",
+    "lint:fix": "npx eslint --fix --ext ts,tsx src && npx prettier --write src",
     "prepare": "husky"
   },
   "prisma": {
