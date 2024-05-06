@@ -1,5 +1,5 @@
 import { Category } from '@prisma/client'
-import Image from 'next/image'
+import { Image } from './image'
 
 export type CategoryItemProps = {
   category: Category

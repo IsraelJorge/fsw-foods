@@ -1,6 +1,6 @@
 import { Restaurant } from '@prisma/client'
 
-import Image from 'next/image'
+import { Image } from './image'
 import { Icon } from './icon'
 import { formatCurrency } from '@/helpers/price'
 import { Button } from './ui/button'

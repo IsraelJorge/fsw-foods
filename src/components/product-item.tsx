@@ -1,7 +1,7 @@
 import { calculateProductTotalPrice, formatCurrency } from '@/helpers/price'
 import { Prisma } from '@prisma/client'
 
-import Image from 'next/image'
+import { Image } from './image'
 import { Icon } from './icon'
 
 export type ProductItemProps = {
