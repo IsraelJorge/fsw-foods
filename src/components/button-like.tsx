@@ -3,18 +3,31 @@ import { Icon } from './icon'
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
 
-export type ButtonLikeProps = ComponentProps<typeof Button>
+export type ButtonLikeProps = ComponentProps<typeof Button> & {
+  sizeIcon?: 'sm' | 'md' | 'lg'
+}
 
-export function ButtonLike({ className, ...props }: ButtonLikeProps) {
+const sizeIconMap = {
+  sm: 16,
+  md: 20,
+  lg: 24,
+}
+
+export function ButtonLike({
+  className,
+  sizeIcon = 'sm',
+  ...props
+}: ButtonLikeProps) {
   return (
     <Button
-      className={cn(
-        'absolute right-2 top-2 size-7 rounded-full bg-muted-foreground/80 p-0',
-        className,
-      )}
+      className={cn('rounded-full bg-muted-foreground/80 p-0', className)}
       {...props}
     >
-      <Icon name="HeartIcon" size={16} className="fill-white" />
+      <Icon
+        name="HeartIcon"
+        size={sizeIconMap[sizeIcon]}
+        className="fill-white"
+      />
     </Button>
   )
 }

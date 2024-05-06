@@ -32,7 +32,7 @@ export function RestaurantItem({ restaurant }: RestaurantItemProps) {
             className="absolute left-2 top-2"
           />
 
-          <ButtonLike />
+          <ButtonLike className="absolute right-2 top-2 size-7" />
         </div>
         <div>
           <h3 className="text-sm font-semibold">{restaurant.name}</h3>
