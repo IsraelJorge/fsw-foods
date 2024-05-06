@@ -6,6 +6,7 @@ import { formatCurrency } from '@/helpers/price'
 import Link from 'next/link'
 import { Routes } from '@/utils/ui/Routes'
 import { ButtonLike } from './button-like'
+import { BadgeStar } from './badge-star'
 
 export type RestaurantItemProps = {
   restaurant: Restaurant
@@ -25,14 +26,12 @@ export function RestaurantItem({ restaurant }: RestaurantItemProps) {
             fill
             className="rounded-lg object-cover"
           />
-          <div className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-white px-2 py-[2px]">
-            <Icon
-              name="StarIcon"
-              size={12}
-              className="fill-yellow-400 text-yellow-400"
-            />
-            <span className="text-semibold text-xs">5.0</span>
-          </div>
+          <BadgeStar
+            label="5.0"
+            variant="flat"
+            className="absolute left-2 top-2"
+          />
+
           <ButtonLike />
         </div>
         <div>
