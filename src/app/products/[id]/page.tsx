@@ -21,10 +21,15 @@ export default async function ProductsPage({
     },
   })
 
+  if (!product) return notFound()
+
   const juices = await db.product.findMany({
     where: {
       category: {
         name: 'Sucos',
+      },
+      restaurant: {
+        id: product.restaurantId,
       },
     },
     include: {
@@ -32,8 +37,6 @@ export default async function ProductsPage({
     },
     take: 10,
   })
-
-  if (!product) return notFound()
 
   return (
     <div>
