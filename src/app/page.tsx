@@ -2,10 +2,10 @@ import { CategoryList } from '@/components/category-list'
 import { Header } from '@/components/header'
 import { Icon } from '@/components/icon'
 import { ProductList } from '@/components/product-list'
+import { PromoBanner } from '@/components/promo-banner'
 import { Search } from '@/components/search'
 import { Button } from '@/components/ui/button'
 import { db } from '@/lib/prisma'
-import Image from 'next/image'
 
 export default async function Home() {
   const products = await db.product.findMany({
@@ -36,14 +36,9 @@ export default async function Home() {
       </div>
 
       <div className="px-5 pt-6">
-        <Image
+        <PromoBanner
           src="/images/promo-banner-01.svg"
           alt="Até 30% de desconto em pizzas!"
-          width={0}
-          height={0}
-          className="h-auto w-full"
-          sizes="100vw"
-          quality={100}
         />
       </div>
 
@@ -59,6 +54,13 @@ export default async function Home() {
           </Button>
         </div>
         <ProductList products={products} />
+      </div>
+
+      <div className="px-5 pt-6">
+        <PromoBanner
+          src="/images/promo-banner-02.svg"
+          alt="A partir de R$17,90 em lanches!"
+        />
       </div>
     </div>
   )
