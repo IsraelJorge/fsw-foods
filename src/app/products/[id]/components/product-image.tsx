@@ -17,7 +17,13 @@ export function ProductImage({ src, alt }: ProductImageProps) {
 
   return (
     <div className="relative h-[360px] w-full">
-      <Image src={src} alt={alt} fill className="object-cover" />
+      <Image
+        src={src}
+        alt={alt}
+        priority
+        fill
+        className="h-auto w-auto object-cover"
+      />
 
       <Button
         size="icon"

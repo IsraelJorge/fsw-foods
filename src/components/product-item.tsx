@@ -27,7 +27,8 @@ export function ProductItem({ product }: ProductItemProps) {
             src={product.imageUrl}
             alt={product.name}
             fill
-            className="rounded-lg object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="h-auto w-auto rounded-lg object-cover"
           />
           {hasProductDiscountPercentage && (
             <BadgeDiscount

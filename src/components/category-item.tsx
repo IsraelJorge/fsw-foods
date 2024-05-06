@@ -13,6 +13,7 @@ export function CategoryItem({ category }: CategoryItemProps) {
         alt={category.name}
         width={30}
         height={30}
+        className="size-[30px]"
       />
       <span className="text-sm font-semibold">{category.name}</span>
     </div>
