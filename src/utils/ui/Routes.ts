@@ -4,4 +4,5 @@ export const Routes = {
   restaurantsRecommended: '/restaurants/recommended',
   productsRecommended: '/products/recommended',
   categoryProduct: (id: string) => `/categories/${id}/products`,
+  restaurantsSearch: (search: string) => `/restaurants?search=${search}`,
 }
