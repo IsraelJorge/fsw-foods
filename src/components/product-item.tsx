@@ -5,6 +5,7 @@ import { Image } from './image'
 import Link from 'next/link'
 import { Routes } from '@/utils/ui/Routes'
 import { BadgeDiscount } from './badge-discount'
+import { cn } from '@/lib/utils'
 
 export type ProductItemProps = {
   product: Prisma.ProductGetPayload<{
@@ -14,15 +15,19 @@ export type ProductItemProps = {
       }
     }
   }>
+  className?: string
 }
 
-export function ProductItem({ product }: ProductItemProps) {
+export function ProductItem({ product, className }: ProductItemProps) {
   const hasProductDiscountPercentage = product.discountPercentage > 0
 
   return (
-    <Link className="w-[150px] min-w-[150px]" href={Routes.product(product.id)}>
+    <Link
+      className={cn('w-[150px] min-w-[150px]', className)}
+      href={Routes.product(product.id)}
+    >
       <div className="w-full space-y-2">
-        <div className="relative h-[150px] w-full">
+        <div className="relative aspect-square">
           <Image
             src={product.imageUrl}
             alt={product.name}
