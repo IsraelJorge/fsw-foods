@@ -7,15 +7,17 @@ import Link from 'next/link'
 import { Routes } from '@/utils/ui/Routes'
 import { ButtonLike } from './button-like'
 import { BadgeStar } from './badge-star'
+import { cn } from '@/lib/utils'
 
 export type RestaurantItemProps = {
   restaurant: Restaurant
+  className?: string
 }
 
-export function RestaurantItem({ restaurant }: RestaurantItemProps) {
+export function RestaurantItem({ restaurant, className }: RestaurantItemProps) {
   return (
     <Link
-      className="min-w-[266px] max-w-[266px]"
+      className={cn('min-w-[266px] max-w-[266px]', className)}
       href={Routes.restaurant(restaurant.id)}
     >
       <div className="h-full w-full space-y-3">
