@@ -1,11 +1,11 @@
 'use client'
 
 import { BadgeDiscount } from '@/components/badge-discount'
+import { DeliveryCard } from '@/components/delivery-card'
 import { Icon } from '@/components/icon'
 import { Image } from '@/components/image'
 import { ProductList } from '@/components/product-list'
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
 import { calculateProductTotalPrice, formatCurrency } from '@/helpers/price'
 import { Prisma } from '@prisma/client'
 import { useState } from 'react'
@@ -94,30 +94,9 @@ export function ProductDetails({
         </div>
       </div>
 
-      <Card className="mx-5 mt-6 flex justify-around py-3">
-        <div className="flex flex-col items-center gap-1 text-xs">
-          <div className="flex items-center gap-1 text-muted-foreground">
-            <span className="block font-semibold">Entrega</span>
-            <Icon name="BikeIcon" size={14} />
-          </div>
-          <span className="font-semibold">
-            {Number(product.restaurant.deliveryFee) === 0
-              ? 'Grátis'
-              : formatCurrency(Number(product.restaurant.deliveryFee))}
-          </span>
-        </div>
-
-        <div className="flex flex-col items-center gap-1 text-xs">
-          <div className="flex items-center gap-1 text-muted-foreground">
-            <span className="block font-semibold">Entrega</span>
-            <Icon name="TimerIcon" size={14} />
-          </div>
-
-          <span className="font-semibold">
-            {product.restaurant.deliveryTimeMinutes} min
-          </span>
-        </div>
-      </Card>
+      <div className="mx-5 mt-6 ">
+        <DeliveryCard restaurant={product.restaurant} />
+      </div>
 
       <div className="mt-6 space-y-3 px-5">
         <h3 className="font-semibold">Sobre</h3>
