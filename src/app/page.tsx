@@ -51,9 +51,12 @@ export default async function Home() {
           <Button
             variant="ghost"
             className="h-fit p-0 text-primary hover:bg-transparent"
+            asChild
           >
-            Ver todos
-            <Icon name="ChevronRightIcon" size={16} />
+            <Link href={Routes.productsRecommended}>
+              Ver todos
+              <Icon name="ChevronRightIcon" size={16} />
+            </Link>
           </Button>
         </div>
         <ProductList products={products} />
