@@ -42,6 +42,7 @@ export default async function Home() {
         <PromoBanner
           src="/images/promo-banner-01.svg"
           alt="Até 30% de desconto em pizzas!"
+          priority
         />
       </div>
 

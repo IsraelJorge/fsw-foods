@@ -10,13 +10,13 @@ export type CategoryItemProps = {
 export function CategoryItem({ category }: CategoryItemProps) {
   return (
     <Link href={Routes.categoryProduct(category.id)}>
-      <div className="flex items-center justify-center gap-3 rounded-full bg-white px-4 py-3 shadow-md ">
+      <div className="relative flex items-center justify-center gap-3 rounded-full bg-white px-4 py-3 shadow-md ">
         <Image
           src={category.imageUrl}
           alt={category.name}
-          width={30}
-          height={30}
-          className="size-[30px]"
+          width={28}
+          height={28}
+          className="aspect-square size-7"
         />
         <span className="text-sm font-semibold">{category.name}</span>
       </div>
