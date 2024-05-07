@@ -57,3 +57,9 @@
     @apply text-foreground antialiased;
   }
 }
+
+@layer utilities {
+  .scroll-hidden {
+    @apply overflow-x-scroll [&::-webkit-scrollbar]:hidden;
+  }
+}
