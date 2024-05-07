@@ -21,9 +21,10 @@ model Restaurant {
 }
 
 model Category {
-  id       String @id @unique() @default(uuid())
-  name     String
-  imageUrl String
+  id        String   @id @unique() @default(uuid())
+  name      String
+  imageUrl  String
+  createdAt DateTime @default(now())
 
   restaurants Restaurant[]
   products    Product[]
@@ -32,12 +33,13 @@ model Category {
 }
 
 model Product {
-  id                 String  @id @unique() @default(uuid())
+  id                 String   @id @unique() @default(uuid())
   name               String
   description        String
   imageUrl           String
-  price              Decimal @db.Decimal(10, 2)
-  discountPercentage Int     @default(0)
+  price              Decimal  @db.Decimal(10, 2)
+  discountPercentage Int      @default(0)
+  createdAt          DateTime @default(now())
 
   restaurantId String
   categoryId   String
