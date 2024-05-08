@@ -21,6 +21,7 @@ type CartContext = {
   subtotalPrice: number
   totalPrice: number
   totalDiscounts: number
+  totalQuantity: number
   addProductToCart: ({
     newProduct,
     emptyCart,
@@ -42,6 +43,7 @@ const CartContext = createContext<CartContext>({
   subtotalPrice: 0,
   totalPrice: 0,
   totalDiscounts: 0,
+  totalQuantity: 0,
   addProductToCart: () => {},
   increaseProductQuantity: () => {},
   decreaseProductQuantity: () => {},
@@ -63,6 +65,12 @@ export function CartProvider({ children }: CartProviderProps) {
         return acc + calculateProductTotalPrice(product) * product.quantity
       }, 0) + Number(products[0]?.restaurant.deliveryFee)
     )
+  }, [products])
+
+  const totalQuantity = useMemo(() => {
+    return products.reduce((acc, product) => {
+      return acc + product.quantity
+    }, 0)
   }, [products])
 
   const totalDiscounts =
@@ -146,6 +154,7 @@ export function CartProvider({ children }: CartProviderProps) {
         subtotalPrice,
         totalPrice,
         totalDiscounts,
+        totalQuantity,
       }}
     >
       {children}

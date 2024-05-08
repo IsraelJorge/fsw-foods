@@ -5,6 +5,7 @@ import { Image } from '@/components/image'
 import { BadgeStar } from '@/components/badge-star'
 import { DeliveryCard } from '@/components/delivery-card'
 import { ProductList } from '@/components/product-list'
+import { CartBanner } from './components/cart-banner'
 
 export type RestaurantPageProps = {
   params: {
@@ -59,7 +60,6 @@ export default async function RestaurantPage({
   return (
     <div>
       <RestaurantImage src={restaurant.imageUrl} alt={restaurant.name} />
-
       <div className="relative z-10 -mt-5 rounded-t-3xl bg-white py-5">
         <div className="flex items-center justify-between px-5">
           <div className="flex items-center gap-[0.375rem]">
@@ -75,11 +75,9 @@ export default async function RestaurantPage({
           <BadgeStar label="5.0" variant="secondary" />
         </div>
       </div>
-
       <div className="mx-5 mt-6 ">
         <DeliveryCard restaurant={restaurant} />
       </div>
-
       <div className="scroll-hidden mt-3 flex gap-4 px-5">
         {restaurant.categories.map((category) => (
           <div
@@ -92,18 +90,18 @@ export default async function RestaurantPage({
           </div>
         ))}
       </div>
-
       <div className="mt-6 space-y-4">
         <h2 className="px-5 font-semibold">Mais Pedidos</h2>
         <ProductList products={restaurant.products} />
       </div>
-
       {restaurant.categories.map((category) => (
         <div key={category.id} className="mt-6 space-y-4">
           <h2 className="px-5 font-semibold">{category.name}</h2>
           <ProductList products={category.products} />
         </div>
       ))}
+
+      <CartBanner restaurantId={restaurant.id} />
     </div>
   )
 }

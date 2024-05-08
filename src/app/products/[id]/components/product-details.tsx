@@ -62,9 +62,6 @@ export function ProductDetails({
       (productCart) => productCart.restaurantId !== product.restaurantId,
     )
 
-    console.log({ hasDifferentRestaurantProduct })
-    console.log({ products })
-
     if (hasDifferentRestaurantProduct) {
       return setIsConfirmationDialogOpen(true)
     }
