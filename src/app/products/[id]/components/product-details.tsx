@@ -1,11 +1,13 @@
 'use client'
 
 import { BadgeDiscount } from '@/components/badge-discount'
+import { Cart } from '@/components/cart'
 import { DeliveryCard } from '@/components/delivery-card'
 import { Icon } from '@/components/icon'
 import { Image } from '@/components/image'
 import { ProductList } from '@/components/product-list'
 import { Button } from '@/components/ui/button'
+import { useCart } from '@/contexts/cart'
 import { calculateProductTotalPrice, formatCurrency } from '@/helpers/price'
 import { Prisma } from '@prisma/client'
 import { useState } from 'react'
@@ -28,12 +30,19 @@ export function ProductDetails({
   complementaryProducts,
 }: ProductDetailsProps) {
   const [quantity, setQuantity] = useState(1)
+  const [isOpen, setOpen] = useState(false)
+  const { addProductToCart } = useCart()
 
   const handleIncreaseQuantityClick = () =>
     setQuantity((prevState) => prevState + 1)
 
   const handleDecreaseQuantityClick = () =>
     setQuantity((prevState) => prevState - 1)
+
+  const handleAddProductToCartClick = () => {
+    addProductToCart({ ...product, quantity })
+    setOpen(true)
+  }
 
   return (
     <div className="relative z-10 -mt-5 rounded-t-3xl bg-white py-5">
@@ -109,8 +118,15 @@ export function ProductDetails({
       </div>
 
       <div className="mt-6 px-5">
-        <Button className="w-full font-semibold">Adicionar à Sacola</Button>
+        <Button
+          className="w-full font-semibold"
+          onClick={handleAddProductToCartClick}
+        >
+          Adicionar à Sacola
+        </Button>
       </div>
+
+      <Cart isOpen={isOpen} onClose={setOpen} />
     </div>
   )
 }

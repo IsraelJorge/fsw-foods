@@ -1,0 +1,144 @@
+'use client'
+
+import { calculateProductTotalPrice } from '@/helpers/price'
+import { Prisma } from '@prisma/client'
+import { createContext, useContext, useMemo, useState } from 'react'
+
+export type CardProduct = Prisma.ProductGetPayload<{
+  include: {
+    restaurant: {
+      select: {
+        deliveryFee: true
+      }
+    }
+  }
+}> & {
+  quantity: number
+}
+
+type CartContext = {
+  products: CardProduct[]
+  subtotalPrice: number
+  totalPrice: number
+  totalDiscounts: number
+  addProductToCart: (newProduct: CardProduct) => void
+  increaseProductQuantity: (productId: string) => void
+  decreaseProductQuantity: (productId: string) => void
+  removeProductFromCart: (productId: string) => void
+}
+
+type CartProviderProps = {
+  children: JSX.Element
+}
+
+const CartContext = createContext<CartContext>({
+  products: [],
+  subtotalPrice: 0,
+  totalPrice: 0,
+  totalDiscounts: 0,
+  addProductToCart: () => {},
+  increaseProductQuantity: () => {},
+  decreaseProductQuantity: () => {},
+  removeProductFromCart: () => {},
+})
+
+export function CartProvider({ children }: CartProviderProps) {
+  const [products, setProducts] = useState<CardProduct[]>([])
+
+  const subtotalPrice = useMemo(() => {
+    return products.reduce((acc, product) => {
+      return acc + Number(product.price) * product.quantity
+    }, 0)
+  }, [products])
+
+  const totalPrice = useMemo(() => {
+    return products.reduce((acc, product) => {
+      return acc + calculateProductTotalPrice(product) * product.quantity
+    }, 0)
+  }, [products])
+
+  const totalDiscounts = subtotalPrice - totalPrice
+
+  const increaseProductQuantity = (productId: string) => {
+    setProducts((prevProducts) => {
+      return prevProducts.map((productCart) => {
+        if (productCart.id === productId) {
+          return {
+            ...productCart,
+            quantity: (productCart.quantity += 1),
+          }
+        }
+        return productCart
+      })
+    })
+  }
+
+  const decreaseProductQuantity = (productId: string) => {
+    setProducts((prevProducts) => {
+      return prevProducts.map((productCart) => {
+        if (productCart.id === productId) {
+          return {
+            ...productCart,
+            quantity: (productCart.quantity -= 1),
+          }
+        }
+        return productCart
+      })
+    })
+  }
+
+  const addProductToCart = (newProduct: CardProduct) => {
+    const isProductAlreadyOnCart = products.some(
+      (productCart) => productCart.id === newProduct.id,
+    )
+
+    if (isProductAlreadyOnCart) {
+      setProducts((prevProducts) => {
+        return prevProducts.map((product) => {
+          if (product.id === newProduct.id) {
+            return {
+              ...product,
+              quantity: (product.quantity += newProduct.quantity),
+            }
+          }
+
+          return product
+        })
+      })
+    } else {
+      setProducts((prevProducts) => [...prevProducts, newProduct])
+    }
+  }
+
+  const removeProductFromCart = (productId: string) => {
+    setProducts((prevState) => {
+      return prevState.filter((productCart) => productCart.id !== productId)
+    })
+  }
+
+  return (
+    <CartContext.Provider
+      value={{
+        products,
+        addProductToCart,
+        increaseProductQuantity,
+        decreaseProductQuantity,
+        removeProductFromCart,
+        subtotalPrice,
+        totalPrice,
+        totalDiscounts,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  )
+}
+
+export const useCart = () => {
+  const context = useContext(CartContext)
+
+  if (!context)
+    throw new Error('useCart should be used inside of a CartProvider')
+
+  return context
+}
