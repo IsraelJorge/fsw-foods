@@ -21,7 +21,13 @@ type CartContext = {
   subtotalPrice: number
   totalPrice: number
   totalDiscounts: number
-  addProductToCart: (newProduct: CardProduct) => void
+  addProductToCart: ({
+    newProduct,
+    emptyCart,
+  }: {
+    newProduct: CardProduct
+    emptyCart?: boolean
+  }) => void
   increaseProductQuantity: (productId: string) => void
   decreaseProductQuantity: (productId: string) => void
   removeProductFromCart: (productId: string) => void
@@ -52,12 +58,15 @@ export function CartProvider({ children }: CartProviderProps) {
   }, [products])
 
   const totalPrice = useMemo(() => {
-    return products.reduce((acc, product) => {
-      return acc + calculateProductTotalPrice(product) * product.quantity
-    }, 0)
+    return (
+      products.reduce((acc, product) => {
+        return acc + calculateProductTotalPrice(product) * product.quantity
+      }, 0) + Number(products[0]?.restaurant.deliveryFee)
+    )
   }, [products])
 
-  const totalDiscounts = subtotalPrice - totalPrice
+  const totalDiscounts =
+    subtotalPrice - (totalPrice - Number(products[0]?.restaurant.deliveryFee))
 
   const increaseProductQuantity = (productId: string) => {
     setProducts((prevProducts) => {
@@ -87,13 +96,23 @@ export function CartProvider({ children }: CartProviderProps) {
     })
   }
 
-  const addProductToCart = (newProduct: CardProduct) => {
+  const addProductToCart = ({
+    newProduct,
+    emptyCart,
+  }: {
+    newProduct: CardProduct
+    emptyCart?: boolean
+  }) => {
+    if (emptyCart) {
+      setProducts([])
+    }
+
     const isProductAlreadyOnCart = products.some(
       (productCart) => productCart.id === newProduct.id,
     )
 
     if (isProductAlreadyOnCart) {
-      setProducts((prevProducts) => {
+      return setProducts((prevProducts) => {
         return prevProducts.map((product) => {
           if (product.id === newProduct.id) {
             return {
@@ -105,9 +124,9 @@ export function CartProvider({ children }: CartProviderProps) {
           return product
         })
       })
-    } else {
-      setProducts((prevProducts) => [...prevProducts, newProduct])
     }
+
+    setProducts((prevProducts) => [...prevProducts, newProduct])
   }
 
   const removeProductFromCart = (productId: string) => {
