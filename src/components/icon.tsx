@@ -3,7 +3,10 @@ import { LucideProps } from 'lucide-react'
 import React from 'react'
 
 type Keys = keyof typeof LucideIcons
-type IconName = Exclude<Keys, 'icons' | 'createLucideIcon' | 'LucideIcon'>
+export type IconName = Exclude<
+  Keys,
+  'icons' | 'createLucideIcon' | 'LucideIcon'
+>
 
 type IconProps = LucideProps & {
   name: IconName

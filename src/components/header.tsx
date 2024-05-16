@@ -1,7 +1,6 @@
 import { Image } from './image'
-import { Button } from './ui/button'
-import { Icon } from './icon'
 import Link from 'next/link'
+import { SlideMenu } from './slide-menu'
 
 export function Header() {
   return (
@@ -15,13 +14,7 @@ export function Header() {
           className="h-[30px] w-[100px]"
         />
       </Link>
-      <Button
-        size="icon"
-        variant="outline"
-        className="border-none bg-transparent"
-      >
-        <Icon name="MenuIcon" />
-      </Button>
+      <SlideMenu />
     </header>
   )
 }
