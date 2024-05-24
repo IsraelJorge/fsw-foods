@@ -25,7 +25,8 @@ type CartProps = {
 export function Cart({ isOpen, onClose }: CartProps) {
   const { data } = useAuth()
 
-  const { products, subtotalPrice, totalPrice, totalDiscounts } = useCart()
+  const { products, subtotalPrice, totalPrice, totalDiscounts, clearCart } =
+    useCart()
 
   const handleFinishOrderClick = async () => {
     if (!data?.user) return
@@ -49,9 +50,17 @@ export function Cart({ isOpen, onClose }: CartProps) {
           id: data?.user.id,
         },
       },
+      orderProducts: {
+        createMany: {
+          data: products.map((product) => ({
+            productId: product.id,
+            quantity: product.quantity,
+          })),
+        },
+      },
     })
 
-    alert('Pedido realizado com sucesso!')
+    clearCart()
   }
 
   return (

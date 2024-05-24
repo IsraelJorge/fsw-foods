@@ -16,21 +16,26 @@ import { signIn, signOut } from 'next-auth/react'
 import { Separator } from './ui/separator'
 import { Permission, hasPermission } from '@/data/Permissions'
 import { useAuth } from '@/data/hooks/useAuth'
+import Link from 'next/link'
+import { Routes } from '@/utils/ui/Routes'
 
 const SlideItems: SlideItemProps[] = [
   {
     label: 'Inicio',
     icon: 'HomeIcon',
+    href: Routes.home,
     permissions: [Permission.Authenticated, Permission.Unauthenticated],
   },
   {
     label: 'Meus Pedidos',
     icon: 'ScrollTextIcon',
+    href: Routes.myOrders,
     permissions: [Permission.Authenticated],
   },
   {
     label: 'Restaurantes Favoritos',
     icon: 'HeartIcon',
+    href: '#',
     permissions: [Permission.Authenticated],
   },
 ]
@@ -142,17 +147,23 @@ type SlideItemProps = {
   label: string
   icon: IconName
   permissions: Permission[]
+  href: string
 }
 
-const SlideItem = ({ label, icon, permissions }: SlideItemProps) => {
+const SlideItem = ({ label, icon, permissions, href }: SlideItemProps) => {
   const { status } = useAuth()
 
   if (!hasPermission(status, permissions)) return null
 
   return (
-    <Button className="w-full justify-start gap-3 rounded-full font-normal">
-      <Icon name={icon} size={16} />
-      <span>{label}</span>
+    <Button
+      className="w-full justify-start gap-3 rounded-full font-normal"
+      asChild
+    >
+      <Link href={href}>
+        <Icon name={icon} size={16} />
+        <span>{label}</span>
+      </Link>
     </Button>
   )
 }

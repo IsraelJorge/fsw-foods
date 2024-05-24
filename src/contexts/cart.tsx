@@ -34,6 +34,7 @@ type CartContext = {
   increaseProductQuantity: (productId: string) => void
   decreaseProductQuantity: (productId: string) => void
   removeProductFromCart: (productId: string) => void
+  clearCart: () => void
 }
 
 type CartProviderProps = {
@@ -50,6 +51,7 @@ const CartContext = createContext<CartContext>({
   increaseProductQuantity: () => {},
   decreaseProductQuantity: () => {},
   removeProductFromCart: () => {},
+  clearCart: () => {},
 })
 
 export function CartProvider({ children }: CartProviderProps) {
@@ -145,6 +147,10 @@ export function CartProvider({ children }: CartProviderProps) {
     })
   }
 
+  const clearCart = () => {
+    setProducts([])
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -157,6 +163,7 @@ export function CartProvider({ children }: CartProviderProps) {
         totalPrice,
         totalDiscounts,
         totalQuantity,
+        clearCart,
       }}
     >
       {children}
