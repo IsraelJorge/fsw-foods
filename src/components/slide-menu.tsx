@@ -12,9 +12,10 @@ import {
 import { Button } from './ui/button'
 import { Icon, IconName } from './icon'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { signIn, signOut } from 'next-auth/react'
 import { Separator } from './ui/separator'
-import { Permission, hasPermission } from '@/app/data/Permissions'
+import { Permission, hasPermission } from '@/data/Permissions'
+import { useAuth } from '@/data/hooks/useAuth'
 
 const SlideItems: SlideItemProps[] = [
   {
@@ -53,7 +54,7 @@ const SlideItems: SlideItemProps[] = [
 // ]
 
 export function SlideMenu() {
-  const { data } = useSession()
+  const { data } = useAuth()
 
   const handleSignIn = () => signIn()
   const handleSignOut = () => signOut()
@@ -144,7 +145,7 @@ type SlideItemProps = {
 }
 
 const SlideItem = ({ label, icon, permissions }: SlideItemProps) => {
-  const { status } = useSession()
+  const { status } = useAuth()
 
   if (!hasPermission(status, permissions)) return null
 

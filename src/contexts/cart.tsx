@@ -8,7 +8,9 @@ export type CardProduct = Prisma.ProductGetPayload<{
   include: {
     restaurant: {
       select: {
+        id: true
         deliveryFee: true
+        deliveryTimeMinutes: true
       }
     }
   }

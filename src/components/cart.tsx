@@ -13,6 +13,9 @@ import { Card, CardContent } from './ui/card'
 import { formatCurrency } from '@/helpers/price'
 import { Separator } from './ui/separator'
 import { Button } from './ui/button'
+import { createOrder } from '@/data/actions/order'
+import { OrderStatus } from '@prisma/client'
+import { useAuth } from '@/data/hooks/useAuth'
 
 type CartProps = {
   isOpen: boolean
@@ -20,7 +23,36 @@ type CartProps = {
 }
 
 export function Cart({ isOpen, onClose }: CartProps) {
+  const { data } = useAuth()
+
   const { products, subtotalPrice, totalPrice, totalDiscounts } = useCart()
+
+  const handleFinishOrderClick = async () => {
+    if (!data?.user) return
+
+    const restaurant = products[0].restaurant
+
+    await createOrder({
+      totalPrice,
+      subtotalPrice,
+      totalDiscounts,
+      deliveryFee: restaurant.deliveryFee,
+      deliveryTimeMinutes: restaurant.deliveryTimeMinutes,
+      restaurant: {
+        connect: {
+          id: restaurant.id,
+        },
+      },
+      status: OrderStatus.CONFIRMED,
+      user: {
+        connect: {
+          id: data?.user.id,
+        },
+      },
+    })
+
+    alert('Pedido realizado com sucesso!')
+  }
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -81,7 +113,10 @@ export function Cart({ isOpen, onClose }: CartProps) {
               </Card>
 
               <SheetClose asChild>
-                <Button className="mt-6 w-full font-semibold">
+                <Button
+                  className="mt-6 w-full font-semibold"
+                  onClick={handleFinishOrderClick}
+                >
                   Finalizar Pedido
                 </Button>
               </SheetClose>

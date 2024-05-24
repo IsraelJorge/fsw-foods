@@ -54,14 +54,14 @@ model Product {
 }
 
 model Order {
-  id            String      @id @unique() @default(uuid())
-  subtotalPrice Decimal     @db.Decimal(10, 2)
-  totalPrice    Decimal     @db.Decimal(10, 2)
-  totalDiscount Decimal     @db.Decimal(10, 2)
-  deliveryTime  Int
-  deliveryFee   Decimal     @db.Decimal(10, 2)
-  createdAt     DateTime    @default(now())
-  status        OrderStatus
+  id                  String      @id @unique() @default(uuid())
+  subtotalPrice       Decimal     @db.Decimal(10, 2)
+  totalPrice          Decimal     @db.Decimal(10, 2)
+  totalDiscounts      Decimal     @db.Decimal(10, 2)
+  deliveryTimeMinutes Int
+  deliveryFee         Decimal     @db.Decimal(10, 2)
+  createdAt           DateTime    @default(now())
+  status              OrderStatus
 
   products Product[]
 
