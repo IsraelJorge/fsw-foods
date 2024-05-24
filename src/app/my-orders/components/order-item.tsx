@@ -6,11 +6,13 @@ import { Badge, BadgeVariant } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { useCart } from '@/contexts/cart'
 import { formatCurrency } from '@/helpers/price'
 import { Routes } from '@/utils/ui/Routes'
 import { OrderStatus, Prisma } from '@prisma/client'
 import { AvatarImage } from '@radix-ui/react-avatar'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export type OrderItemProps = {
   order: Prisma.OrderGetPayload<{
@@ -40,8 +42,24 @@ const VariantStatusMap: { [key: string]: BadgeVariant } = {
 }
 
 export function OrderItem({ order }: OrderItemProps) {
+  const { addProductToCart } = useCart()
+  const router = useRouter()
+
   const statusLabel = StatusLabelMap[order.status] || 'Desconhecido'
   const statusVariant = VariantStatusMap[order.status] || 'disabled'
+
+  const handleRedoOrderClick = () => {
+    for (const orderProduct of order.orderProducts) {
+      addProductToCart({
+        newProduct: {
+          ...orderProduct.product,
+          quantity: orderProduct.quantity,
+          restaurant: order.restaurant,
+        },
+      })
+    }
+    router.push(Routes.restaurant(order.restaurantId))
+  }
 
   return (
     <Card>
@@ -96,6 +114,7 @@ export function OrderItem({ order }: OrderItemProps) {
             className="text-xs text-primary"
             size="sm"
             disabled={order.status !== 'DELIVERED'}
+            onClick={handleRedoOrderClick}
           >
             Adicionar à sacola
           </Button>
