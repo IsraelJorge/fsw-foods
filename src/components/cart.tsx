@@ -16,6 +16,9 @@ import { Button } from './ui/button'
 import { createOrder } from '@/data/actions/order'
 import { OrderStatus } from '@prisma/client'
 import { useAuth } from '@/data/hooks/useAuth'
+import { showToast } from '@/utils/ui/showToast'
+import { useRouter } from 'next/navigation'
+import { Routes } from '@/utils/ui/Routes'
 
 type CartProps = {
   isOpen: boolean
@@ -27,6 +30,7 @@ export function Cart({ isOpen, onClose }: CartProps) {
 
   const { products, subtotalPrice, totalPrice, totalDiscounts, clearCart } =
     useCart()
+  const router = useRouter()
 
   const handleFinishOrderClick = async () => {
     if (!data?.user) return
@@ -61,6 +65,17 @@ export function Cart({ isOpen, onClose }: CartProps) {
     })
 
     clearCart()
+    showToast({
+      title: 'Pedido realizado com sucesso',
+      description: 'Acompanhe o status do seu pedido na aba "Meus Pedidos".',
+      type: 'success',
+      options: {
+        action: {
+          label: 'Ver pedidos',
+          onClick: () => router.push(Routes.myOrders),
+        },
+      },
+    })
   }
 
   return (
