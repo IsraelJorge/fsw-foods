@@ -7,4 +7,5 @@ export const Routes = {
   categoryProduct: (id: string) => `/categories/${id}/products`,
   restaurantsSearch: (search: string) => `/restaurants?search=${search}`,
   myOrders: '/my-orders',
+  myFavoriteRestaurants: '/my-favorite-restaurants',
 }

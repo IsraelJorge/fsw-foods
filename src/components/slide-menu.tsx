@@ -35,7 +35,7 @@ const SlideItems: SlideItemProps[] = [
   {
     label: 'Restaurantes Favoritos',
     icon: 'HeartIcon',
-    href: '#',
+    href: Routes.myFavoriteRestaurants,
     permissions: [Permission.Authenticated],
   },
 ]
