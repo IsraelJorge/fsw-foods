@@ -20,14 +20,13 @@ export function ButtonLike({
 }: ButtonLikeProps) {
   return (
     <Button
-      className={cn('rounded-full bg-muted-foreground/80 p-0', className)}
+      className={cn(
+        'rounded-full bg-muted-foreground/80 p-0 [&_svg]:fill-white',
+        className,
+      )}
       {...props}
     >
-      <Icon
-        name="HeartIcon"
-        size={sizeIconMap[sizeIcon]}
-        className="fill-white"
-      />
+      <Icon name="HeartIcon" size={sizeIconMap[sizeIcon]} />
     </Button>
   )
 }
