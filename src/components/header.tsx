@@ -1,10 +1,11 @@
 import { Image } from './image'
 import Link from 'next/link'
 import { SlideMenu } from './slide-menu'
+import { Container } from './layouts/container'
 
 export function Header() {
   return (
-    <header className="flex justify-between px-5 pt-6">
+    <Container as="header" className="flex justify-between px-5 pt-6">
       <Link href="/">
         <Image
           src="/images/logo.svg"
@@ -15,6 +16,6 @@ export function Header() {
         />
       </Link>
       <SlideMenu />
-    </header>
+    </Container>
   )
 }

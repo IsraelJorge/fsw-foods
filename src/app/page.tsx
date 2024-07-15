@@ -1,6 +1,8 @@
+import { BannerHome } from '@/components/banner-home'
 import { CategoryList } from '@/components/category-list'
 import { Header } from '@/components/header'
 import { Icon } from '@/components/icon'
+import { Container } from '@/components/layouts/container'
 import { ProductList } from '@/components/product-list'
 import { PromoBanner } from '@/components/promo-banner'
 import { RestaurantList } from '@/components/restaurant-list'
@@ -30,24 +32,27 @@ export default async function Home() {
   return (
     <div>
       <Header />
-      <div className="px-5 pt-6">
+
+      <BannerHome />
+
+      <div className="pt-6 md:hidden">
         <Search />
       </div>
 
-      <div className="px-5 pt-6">
+      <div className="pt-6">
         <CategoryList />
       </div>
 
-      <div className="px-5 pt-6">
+      <Container className="pt-6">
         <PromoBanner
           src="/images/promo-banner-01.svg"
           alt="Até 30% de desconto em pizzas!"
           priority
         />
-      </div>
+      </Container>
 
-      <div className="space-y-4 pt-6">
-        <div className="flex items-center justify-between px-5">
+      <Container className="space-y-4 pt-6">
+        <div className="flex items-center justify-between">
           <h2 className="font-semibold">Pedidos Recomendados</h2>
           <Button
             variant="ghost"
@@ -61,17 +66,17 @@ export default async function Home() {
           </Button>
         </div>
         <ProductList products={products} />
-      </div>
+      </Container>
 
-      <div className="px-5 pt-6">
+      <Container className="pt-6">
         <PromoBanner
           src="/images/promo-banner-02.svg"
           alt="A partir de R$17,90 em lanches!"
         />
-      </div>
+      </Container>
 
-      <div className="space-y-4 py-6">
-        <div className="flex items-center justify-between px-5">
+      <Container className="space-y-4 py-6">
+        <div className="flex items-center justify-between">
           <h2 className="font-semibold">Restaurantes Recomendados</h2>
           <Button
             variant="ghost"
@@ -85,7 +90,7 @@ export default async function Home() {
           </Button>
         </div>
         <RestaurantList />
-      </div>
+      </Container>
     </div>
   )
 }
